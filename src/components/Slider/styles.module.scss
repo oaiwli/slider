@@ -1,0 +1,61 @@
+.sliderContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+%square {
+  position: fixed;
+  border: 1px solid #e7e9ef;
+  box-sizing: border-box;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.topLeftSquare {
+  @extend %square;
+  top: 0;
+  left: 0;
+  width: 50vw;
+  height: 50vh;
+}
+
+.topRightSquare {
+  @extend %square;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 50vh;
+}
+
+.bottomLeftSquare {
+  @extend %square;
+  bottom: 0;
+  left: 0;
+  width: 50vw;
+  height: 50vh;
+}
+
+.bottomRightSquare {
+  @extend %square;
+  bottom: 0;
+  right: 0;
+  width: 50vw;
+  height: 50vh;
+}
+
+.contentContainer {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+}
+
+.title {
+  font-size: 55px;
+  margin-bottom: 30px;
+  line-height: 1.3;
+}
