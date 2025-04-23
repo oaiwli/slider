@@ -1,7 +1,7 @@
 .mainContainer {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   overflow: hidden;
   margin: 0;
   padding: 0;
@@ -17,34 +17,38 @@
 
 .topLeftSquare {
   @extend %square;
-  top: 0;
-  left: 0;
-  width: 50vw;
-  height: 50vh;
+  top: 0px;
+  left: 75px;
+  width: 750px;
+  height: 498px;
+  border-top: none;
 }
 
 .topRightSquare {
   @extend %square;
-  top: 0;
-  right: 0;
-  width: 50vw;
-  height: 50vh;
+  top: 0px;
+  left: 824px;
+  width: 750px;
+  height: 498px;
+  border-top: none;
 }
 
 .bottomLeftSquare {
   @extend %square;
-  bottom: 0;
-  left: 0;
-  width: 50vw;
-  height: 50vh;
+  top: 497px;
+  left: 75px;
+  width: 750px;
+  height: 498px;
+  border-bottom: none;
 }
 
 .bottomRightSquare {
   @extend %square;
-  bottom: 0;
-  right: 0;
-  width: 50vw;
-  height: 50vh;
+  top: 497px;
+  left: 824px;
+  width: 750px;
+  height: 498px;
+  border-bottom: none;
 }
 
 .contentContainer {
@@ -62,6 +66,7 @@
   font-size: 55px;
   margin-bottom: 30px;
   line-height: 1.3;
+  color: #42567a;
 }
 
 .centerContainer {
@@ -69,105 +74,94 @@
   top: 48%;
   left: 49%;
   transform: translate(-50%, -50%);
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  white-space: nowrap;
 }
 
-.mainText {
+.oldYear {
   font-size: 125px;
   word-spacing: 65px;
+  color: #5d5fef;
 }
 
-.slickContainer {
-  margin: 0px;
+.newYear {
+  font-size: 125px;
+  word-spacing: 65px;
+  color: #ef5da8;
 }
 
-.sliderContainer {
-  margin: 0px;
-}
+//
 
-.sliderWrapper {
+.timeCircle {
   position: absolute;
-  bottom: 15%;
-  left: 10%;
-  right: 10%;
-  width: 80%;
-  margin: 0 auto;
-  z-index: 10;
+  top: 48%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  z-index: 5;
 }
 
-.customSwiper {
+.circleSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 250px;
-  padding-left: 20px;
+  height: 100%;
 }
 
-.slide {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  text-align: left;
-  padding-right: 40px;
-  height: auto;
-}
-
-.slideContent {
-  max-width: 100%;
-  text-align: left;
-}
-
-.slideYear {
-  font-size: 28px;
-  margin-bottom: 10px;
-  color: #333;
-  text-align: left;
-}
-
-.slideText {
-  font-size: 16px;
-  line-height: 1.4;
-  color: #555;
-  text-align: left;
-}
-
-.customNavButton {
-  width: 24px;
-  height: 24px;
-  background: white;
+.timeDot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #42567a;
   border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-
-  svg {
-    fill: currentColor;
-  }
+  border: 1px solid transparent;
 
   &:hover {
-    opacity: 1;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translate(-50%, -50%) scale(1.2);
   }
 
-  &.swiper-button-disabled {
+  .dotContent {
+    color: #42567a;
+    font-size: 16px;
+    font-weight: bold;
     opacity: 0;
-    pointer-events: none;
+    transform: scale(0.5);
+    transition: all 0.3s ease;
+  }
+
+  .tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #42567a;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #42567a;
+  }
+
+  &:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    top: -40px;
   }
 }
-
-.customNavButtonNext {
-  right: -40px;
-}
-
-.customNavButtonPrev {
-  left: -40px;
-}
-
-/* Остальные стили остаются без изменений */
