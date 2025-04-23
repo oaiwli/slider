@@ -1,50 +1,10 @@
-.sliderContainer {
+.mainContainer {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   overflow: hidden;
   margin: 0;
   padding: 0;
-}
-
-%square {
-  position: fixed;
-  border: 1px solid #e7e9ef;
-  box-sizing: border-box;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.topLeftSquare {
-  @extend %square;
-  top: 0;
-  left: 0;
-  width: 50vw;
-  height: 50vh;
-}
-
-.topRightSquare {
-  @extend %square;
-  top: 0;
-  right: 0;
-  width: 50vw;
-  height: 50vh;
-}
-
-.bottomLeftSquare {
-  @extend %square;
-  bottom: 0;
-  left: 0;
-  width: 50vw;
-  height: 50vh;
-}
-
-.bottomRightSquare {
-  @extend %square;
-  bottom: 0;
-  right: 0;
-  width: 50vw;
-  height: 50vh;
 }
 
 .contentContainer {
@@ -54,8 +14,90 @@
   display: flex;
 }
 
+.header {
+  position: absolute;
+  left: 4.5%;
+  top: 5%;
+
+  display: flex;
+}
+
+.line {
+  width: 7px;
+  height: 110px;
+  background: linear-gradient(to bottom, #4575e9, #ef5da8);
+  margin-top: 18px;
+}
+
 .title {
   font-size: 55px;
-  margin-bottom: 30px;
+  margin-left: 35px;
   line-height: 1.3;
+  color: #42567a;
+}
+
+.centerContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  white-space: nowrap;
+}
+
+.oldYear {
+  font-size: 125px;
+  word-spacing: 65px;
+  color: #5d5fef;
+  z-index: 5;
+}
+
+.newYear {
+  font-size: 125px;
+  word-spacing: 65px;
+  color: #ef5da8;
+  z-index: 5;
+}
+
+//
+
+%square {
+  position: absolute;
+  border: 1px solid #e7e9ef;
+  box-sizing: border-box;
+  z-index: -1;
+  pointer-events: none;
+  width: 45.5%;
+  height: 50%;
+}
+
+.topLeftSquare {
+  @extend %square;
+  top: 0%;
+  left: 4.5%;
+  border-top: none;
+}
+
+.topRightSquare {
+  @extend %square;
+  top: 0%;
+  right: 4.5%;
+  border-top: none;
+}
+
+.bottomLeftSquare {
+  @extend %square;
+  bottom: 0%;
+  left: 4.5%;
+  border-bottom: none;
+}
+
+.bottomRightSquare {
+  @extend %square;
+  bottom: 0%;
+  right: 4.5%;
+  border-bottom: none;
 }
