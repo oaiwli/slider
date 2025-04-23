@@ -1,180 +1,114 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./styles.module.scss";
 import { Swipers } from "../Swipers";
-import { gsap } from "gsap";
 import { timePeriods } from "../data/events";
+import { TimeCircle } from "../TimeCircle";
+import { Switch } from "../Switch";
+import gsap from "gsap";
 
 export const Slider = () => {
   const [activePeriod, setActivePeriod] = useState(0);
-  const circleRef = useRef<HTMLDivElement>(null);
-  const dotsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const circleLineRef = useRef<SVGCircleElement>(null);
+  const oldYearRef = useRef<HTMLHeadingElement>(null);
+  const newYearRef = useRef<HTMLHeadingElement>(null);
+  const prevOldYear = useRef<string>(timePeriods[0].range[0].old);
+  const prevNewYear = useRef<string>(timePeriods[0].range[0].new);
 
-  useEffect(() => {
-    if (!circleRef.current || !circleLineRef.current) return;
+  const animateNumber = (
+    element: HTMLElement,
+    newValue: string,
+    prevValue: string
+  ) => {
+    const duration = 1.5;
+    const delay = 0.1;
 
-    const radius = 150;
-    const center = { x: 0, y: 0 };
-    const dots = timePeriods.length;
-
-    // анимка круговой линии
     gsap.fromTo(
-      circleLineRef.current,
-      { strokeDashoffset: 942 },
+      element,
+      { textContent: prevValue },
       {
-        strokeDashoffset: 0,
-        duration: 2,
-        ease: "power2.out",
+        textContent: newValue,
+        duration: duration,
+        delay: delay,
+        ease: "power1.out",
+        snap: { textContent: 1 },
       }
     );
-
-    // точки
-    dotsRef.current.forEach((dot, index) => {
-      if (!dot) return;
-
-      const angle = (index * (360 / dots) - 90) * (Math.PI / 180);
-      const x = center.x + radius * Math.cos(angle);
-      const y = center.y + radius * Math.sin(angle);
-
-      gsap.set(dot, {
-        x,
-        y,
-        opacity: 0,
-      });
-
-      gsap.to(dot, {
-        opacity: 1,
-        duration: 0.8,
-        delay: index * 0.1,
-      });
-    });
-
-    animateActiveDot();
-  }, [activePeriod]);
-
-  const animateActiveDot = () => {
-    dotsRef.current.forEach((dot, index) => {
-      if (!dot) return;
-
-      const dotContent = dot.querySelector(`.${styles.dotContent}`);
-
-      if (index === activePeriod) {
-        gsap.to(dot, {
-          width: 40,
-          height: 40,
-          scale: 1,
-          backgroundColor: "transparent",
-          borderColor: "#42567A",
-          borderWidth: "1px",
-          duration: 0.3,
-        });
-
-        if (dotContent) {
-          gsap.to(dotContent, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.3,
-            color: "#42567A",
-          });
-        }
-      } else {
-        gsap.to(dot, {
-          width: 10,
-          height: 10,
-          scale: 1,
-          backgroundColor: "#42567A",
-          borderColor: "transparent",
-          duration: 0.3,
-        });
-
-        if (dotContent) {
-          gsap.to(dotContent, {
-            opacity: 0,
-            scale: 0.5,
-            duration: 0.3,
-          });
-        }
-      }
-    });
   };
 
   const handleDotClick = (index: number) => {
     if (index === activePeriod) return;
 
+    const newOldYear = timePeriods[index].range[0].old;
+    const newNewYear = timePeriods[index].range[0].new;
+
     setActivePeriod(index);
 
-    gsap.fromTo(
-      dotsRef.current[index],
-      { scale: 1.2 },
-      {
-        scale: 1,
-        duration: 0.5,
-        ease: "elastic.out(1, 0.5)",
-      }
-    );
+    if (oldYearRef.current && newYearRef.current) {
+      animateNumber(oldYearRef.current, newOldYear, prevOldYear.current);
+      animateNumber(newYearRef.current, newNewYear, prevNewYear.current);
+    }
+
+    prevOldYear.current = newOldYear;
+    prevNewYear.current = newNewYear;
   };
 
+  const handleNextClick = () => {
+    const nextIndex = (activePeriod + 1) % timePeriods.length;
+    handleDotClick(nextIndex);
+  };
+
+  const handlePrevClick = () => {
+    const prevIndex =
+      (activePeriod - 1 + timePeriods.length) % timePeriods.length;
+    handleDotClick(prevIndex);
+  };
+
+  useEffect(() => {
+    prevOldYear.current = timePeriods[activePeriod].range[0].old;
+    prevNewYear.current = timePeriods[activePeriod].range[0].new;
+  }, []);
+
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.topLeftSquare}></div>
-      <div className={styles.topRightSquare}></div>
-      <div className={styles.bottomLeftSquare}></div>
-      <div className={styles.bottomRightSquare}></div>
+    <>
+      <div className={styles.mainContainer}>
+        <div className={styles.topLeftSquare}></div>
+        <div className={styles.topRightSquare}></div>
+        <div className={styles.bottomLeftSquare}></div>
+        <div className={styles.bottomRightSquare}></div>
 
-      <div className={styles.contentContainer}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>
-            Исторические
-            <br />
-            даты
-          </h2>
-        </div>
-        <div ref={circleRef} className={styles.timeCircle}>
-          <svg className={styles.circleSvg} viewBox="0 0 320 320">
-            <circle
-              ref={circleLineRef}
-              cx="160"
-              cy="160"
-              r="150"
-              fill="transparent"
-              stroke="#42567A"
-              strokeWidth="1"
-              strokeDasharray="942"
-              strokeDashoffset="942"
-              strokeOpacity="0.2"
-            />
-          </svg>
+        <div className={styles.contentContainer}>
+          <div className={styles.header}>
+            <div className={styles.line}></div>
+            <h2 className={styles.title}>
+              Исторические
+              <br />
+              даты
+            </h2>
+          </div>
 
-          {timePeriods.map((period, index) => (
-            <div
-              key={period.id}
-              ref={(el) => (dotsRef.current[index] = el)}
-              className={styles.timeDot}
-              onClick={() => handleDotClick(index)}
-              style={{
-                top: "48%",
-                left: "48%",
-                zIndex: "110",
-              }}
-            >
-              <div className={styles.dotContent}>{index + 1}</div>
-              <span className={styles.tooltip}>
-                {period.range[0].old} - {period.range[0].new}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className={styles.centerContainer}>
-          <h1 className={styles.oldYear}>
-            {timePeriods[activePeriod].range[0].old}
-          </h1>
-          <h1 className={styles.newYear}>
-            {timePeriods[activePeriod].range[0].new}
-          </h1>
-        </div>
+          <TimeCircle
+            activePeriod={activePeriod}
+            handleDotClick={handleDotClick}
+          />
 
-        <Swipers events={timePeriods[activePeriod].events} />
+          <div className={styles.centerContainer}>
+            <h1 className={styles.oldYear} ref={oldYearRef}>
+              {timePeriods[activePeriod].range[0].old}
+            </h1>
+            <h1 className={styles.newYear} ref={newYearRef}>
+              {timePeriods[activePeriod].range[0].new}
+            </h1>
+          </div>
+
+          <Switch
+            activeIndex={activePeriod}
+            totalItems={timePeriods.length}
+            onNext={handleNextClick}
+            onPrev={handlePrevClick}
+          />
+
+          <Swipers events={timePeriods[activePeriod].events} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };

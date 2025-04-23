@@ -58,7 +58,7 @@
   z-index: 10;
   cursor: pointer;
   opacity: 0.8;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .customNavButton svg {
@@ -70,11 +70,6 @@
 .customNavButton:hover {
   opacity: 1;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.customNavButton.swiper-button-disabled {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .customNavButtonNext {
