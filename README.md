@@ -1,54 +1,27 @@
-# React + TypeScript + Vite
+# Для запуска программы
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ввести в терминал команду "npm run dev"
 
-Currently, two official plugins are available:
+# Стек использованных технологий
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+React + TypeScript + Vite
+Стилизация через SASS/SCSS
+Реализован слайдер с помощью библиотеки Swiper
+Анимации через библиотеку gsap
 
-## Expanding the ESLint configuration
+# Скриншот проекта
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+https://imgur.com/Opd8mam
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+# Описание особенностей
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Весь блок стоит сделать независимым от другой логики на странице.
+Например, если добавить на страницу ещё один такой же блок, верстка и логика работы этих блоков не будет нарушена.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Возможно существование нескольких временных отрезков (задано статичное число, менять только вручную).
+Все интерактивные точки на окружности располагаются на одинаковом расстоянии друг от друга.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+# В разработке
+
+Осуществляю сборку проекта с помощью Webpack.
+Сделаю адаптивный дизайн для разного разершения экранов на компьютерах, под телефоны и планшеты.
