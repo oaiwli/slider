@@ -48,7 +48,6 @@ export const Swipers = ({ events }: CustomSwiperProps) => {
   }, [events]);
 
   useEffect(() => {
-    // Анимация кнопок при изменении состояний
     if (nextButtonRef.current) {
       gsap.to(nextButtonRef.current, {
         opacity: isEnd ? 0 : 1,
